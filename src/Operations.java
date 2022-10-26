@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,14 +24,14 @@ public class Operations {
 
     }
 
-    public static void writeToFile(String str1){
+    public static void writeToFile(String str1, String outputFile){
 
-        File file = new File("output.txt");
+        File file = new File(outputFile);
 
         try{
 
             file.createNewFile();
-            FileWriter writer = new FileWriter("output.txt",true);
+            FileWriter writer = new FileWriter(outputFile,true);
 
             writer.write(str1);
             writer.write("\n");
