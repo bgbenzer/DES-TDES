@@ -5,7 +5,7 @@ public class TripleDES extends Ciphers {
 
     public TripleDES(String inputText, String key, String IV, String nonce) throws NoSuchAlgorithmException, InvalidKeySpecException {
         super(inputText,key,IV,nonce);
-        this.setSecretKey(super.keyGen("TripleDES",112));
+        this.setSecretKey(super.keyGen("TripleDES",112, key));
     }
 
 }

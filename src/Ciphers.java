@@ -4,10 +4,13 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Ciphers {
 
@@ -28,7 +31,7 @@ public class Ciphers {
 
     }
 
-    public SecretKey keyGen(String op, int keySize) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public SecretKey keyGen(String op, int keySize, String key) throws NoSuchAlgorithmException, InvalidKeySpecException {
 
         byte[] keyBytes = key.getBytes();
         byte[] saltKey = new byte[keySize/8];
@@ -43,26 +46,34 @@ public class Ciphers {
     }
 
 
-    public byte[] Encrypt(String op) throws Exception {
+    public byte[] encrypt(String op, byte[] pT) throws Exception {
 
-        byte[] plainText = inputText.getBytes();
-        Cipher cipher = Cipher.getInstance((op+"/ECB/PKCS5Padding"));
+        Cipher cipher = Cipher.getInstance((op+"/ECB/NoPadding"));
 
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-        byte[] cipherText = cipher.doFinal(plainText);
+        byte[] cipherText = cipher.doFinal(pT);
 
         return cipherText;
     }
 
-    public String Decrypt(byte[] inputText,String op) throws Exception {
+    public byte[] decrypt(String op, byte[] cT) throws Exception {
 
-        byte[] cipherText = inputText;
         Cipher cipher = Cipher.getInstance((op+"/ECB/PKCS5Padding"));
 
         cipher.init(Cipher.DECRYPT_MODE, secretKey);
-        byte[] plainText = cipher.doFinal(cipherText);
+        byte[] plainText = cipher.doFinal(cT);
 
-        return new String(plainText);
+        return plainText;
+    }
+
+    public byte[] xOR(byte[] original, byte[] key){ // takes first 8 byte of original byte[] and Xor with key byte[]
+        byte[] xORed = new byte[8];
+
+        for(int i=0; i<8 ; i++){
+            xORed[i] = (byte) (original[i] ^ key[i]);
+        }
+
+        return xORed;
     }
 
 
