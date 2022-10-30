@@ -1,3 +1,5 @@
+import java.nio.ByteBuffer;
+
 public class Main {
 
     public static void main(String[] args) throws Exception {
@@ -20,8 +22,12 @@ public class Main {
 
             System.out.println("====================================");
 
-            byte[] deneme = des.cbcENC();
+            byte[] deneme = des.CTREncryptionAndDecryption(des.getInputText().getBytes());
             System.out.println(deneme.length);
+
+            byte[] deneme2 = des.CTREncryptionAndDecryption(deneme);
+
+            System.out.println(new String(deneme2));
 
 
 //            System.out.println(ct.length);

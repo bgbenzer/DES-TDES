@@ -1,4 +1,3 @@
-import sun.security.util.ArrayUtil;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -10,6 +9,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Ciphers {
@@ -36,7 +36,6 @@ public class Ciphers {
         byte[] keyBytes = key.getBytes();
         byte[] saltKey = new byte[keySize/8];
         saltKey = Arrays.copyOfRange(keyBytes,0,8);
-        ArrayUtil.reverse(saltKey);
 
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
         KeySpec spec = new PBEKeySpec(key.toCharArray(), saltKey, 65536, keySize);
@@ -58,7 +57,7 @@ public class Ciphers {
 
     public byte[] decrypt(String op, byte[] cT) throws Exception {
 
-        Cipher cipher = Cipher.getInstance((op+"/ECB/PKCS5Padding"));
+        Cipher cipher = Cipher.getInstance((op+"/ECB/NoPadding"));
 
         cipher.init(Cipher.DECRYPT_MODE, secretKey);
         byte[] plainText = cipher.doFinal(cT);
