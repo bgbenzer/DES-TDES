@@ -1,7 +1,4 @@
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -44,5 +41,12 @@ public class Operations {
 
     }
 
+    public static byte[] readAsByte(String fileName) throws IOException {
+        byte[] bytes = Files.readAllBytes(Paths.get(fileName));
+        return bytes;
+    }
 
+    public static void writeAsByte(byte[] data, String outputFileName) throws IOException { //TODO
+            Files.write(Paths.get(outputFileName),data);
+    }
 }
