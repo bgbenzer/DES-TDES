@@ -31,7 +31,7 @@ public class Operations {
             FileWriter writer = new FileWriter(outputFile,true);
 
             writer.write(str1);
-            writer.write("\n");
+//            writer.write("\n");
 
             writer.close();
         }
