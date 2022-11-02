@@ -4,7 +4,6 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        //        FileCipher −e −i text.txt −o output.txt DES CFD key.txt
         String[] plainTextFile = {};
         byte[] cipherTextFile = new byte[0];
 
@@ -66,7 +65,7 @@ public class Main {
             long timeDiff = finishTime-startTime;
 
             if(args[1].equals("-e")){
-                    Operations.writeAsByte(encryptedOrDecrypted, args[5]);
+                Operations.writeAsByte(encryptedOrDecrypted, Operations.directoryPath + args[5]);
             }
             else if(args[1].equals("-d")){
                 char[] finalData =  new String(encryptedOrDecrypted).toCharArray();
@@ -76,10 +75,10 @@ public class Main {
                         finalString = finalString+c;
                     }
                 }
-                Operations.writeToFile(finalString, args[5]);
+                Operations.writeToFile(finalString, Operations.directoryPath + args[5]);
             }
 
-            Operations.writeToFile(args[3]+ " "+ args[5]+ " "+ ((args[1].equals("-e"))? "enc": "dec")+" "+args[6]+" "+args[7]+ " "+ timeDiff ,"run.log");
+            Operations.writeToFile(args[3]+ " " + Operations.directoryPath + args[5]+ " "+ ((args[1].equals("-e"))? "enc": "dec")+" "+args[6]+" "+args[7]+ " "+ timeDiff + "\n" ,Operations.directoryPath + "run.log");
 
         }
 
@@ -96,7 +95,7 @@ public class Main {
                         startTime = System.currentTimeMillis();
                         encryptedOrDecrypted = tripleDES.CBCDecryption("TripleDES");
                     }
-                break;
+                    break;
                 case "CFB":
                     if(args[1].equals("-e")){
                         startTime = System.currentTimeMillis();
@@ -114,16 +113,16 @@ public class Main {
                         startTime = System.currentTimeMillis();
                         encryptedOrDecrypted = tripleDES.OFBDecryption("TripleDES");
                     }
-                break;
+                    break;
                 case "CTR":
                     startTime = System.currentTimeMillis();
                     encryptedOrDecrypted = tripleDES.CTREncryptionAndDecryption("TripleDES");
-                break;
+                    break;
             }
             long finishTime = System.currentTimeMillis();
             long timeDiff = finishTime-startTime;
             if(args[1].equals("-e")){
-                Operations.writeAsByte(encryptedOrDecrypted, args[5]);
+                Operations.writeAsByte(encryptedOrDecrypted, Operations.directoryPath + args[5]);
             }
             else if(args[1].equals("-d")){
                 char[] finalData =  new String(encryptedOrDecrypted).toCharArray();
@@ -133,9 +132,9 @@ public class Main {
                         finalString = finalString+c;
                     }
                 }
-                Operations.writeToFile(finalString, args[5]);
+                Operations.writeToFile(finalString, Operations.directoryPath + args[5]);
             }
-            Operations.writeToFile(args[3]+ " "+ args[5]+ " "+ ((args[1].equals("-e"))? "enc": "dec")+" "+args[6]+" "+args[7]+ " "+ timeDiff ,"run.log");
+            Operations.writeToFile(args[3]+ " "+ args[5]+ " "+ ((args[1].equals("-e"))? "enc": "dec")+" "+args[6]+" "+args[7]+ " "+ timeDiff + "\n" ,Operations.directoryPath + "run.log");
 
 
 
